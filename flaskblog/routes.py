@@ -214,3 +214,7 @@ def reset_token(token):
 @app.route("/site")
 def ri():
     return redirect('https://www.cez.co.in')
+
+@app.route("/shivam@cez.co.in")
+def em():
+    return render_template('contact.html', title='Contact US')
