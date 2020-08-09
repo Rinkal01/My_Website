@@ -90,3 +90,7 @@ a.article-title:hover {
 .fotlink:hover {
   color: #ffffff;
 }
+
+.share {
+  text-align: right;
+}
