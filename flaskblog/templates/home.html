@@ -8,17 +8,6 @@
             <div class="article-metadata">
               <a class="mr-2" href="{{ url_for('user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
               <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
-              <script>
-                function copyToClipboard(element) {
-              var $temp = $("<input>");
-              $("body").append($temp);
-              $temp.val($(element).text()).select();
-              document.execCommand("copy");
-              $temp.remove();
-            }
-            
-            </script>
-            <button onclick="copyToClipboard({{ url_for('post', post_id=post.id) }})">Copy P1</button>
             </div>
             <h2><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h2>
             <p class="article-content">{{ post.content }}</p>

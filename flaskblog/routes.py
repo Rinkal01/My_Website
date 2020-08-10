@@ -1,5 +1,6 @@
 import os
 import secrets
+import pyperclip
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt, mail
@@ -16,6 +17,7 @@ def home():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
+
 
 
 @app.route("/about")
@@ -212,9 +214,9 @@ def reset_token(token):
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 @app.route("/site")
-def ri():
+def site():
     return redirect('https://www.cez.co.in')
 
-@app.route("/shivam@cez.co.in")
-def em():
+@app.route("/contact")
+def contact():
     return render_template('contact.html', title='Contact US')
