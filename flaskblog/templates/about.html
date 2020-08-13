@@ -1,58 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
     <h1>About Page</h1>
-    <!-- <script>
-        function clip_text(a_string){
-            var input = document.createElement('input')
-            input.id="__copyText__";
-            input.value = a_string; // OOPS! document.getElementById(divId).innerText;
-            document.body.appendChild(input);
-            input.select();
-            document.execCommand("copy");
-            var txt = input.value                                                 #ITS WORKING METHOD
-            input.remove()
-            console.log("OK COPIED: '"+txt+"'")
-        }
-        function clip_div(divId){
-           return clip_text(document.getElementById(divId).innerText)
-        }
-        </script>
+     
+        <article class="media content-section">
+            <!-- <img class="rounded-circle article-img" src="https://cez.co.in/wp-content/uploads/2020/08/cropped-Screenshot__762_-removebg-preview__1_-removebg-preview.png"> -->
+            hii hi I am Shivam Kaushal from Class 12 hoshiarpur
+        This Full Stack Website is made by me using 
 
-<a href="#" onClick = "clip_div('copyme')">Test</a>
-<div id="copyme">Data that I want to copy</div> -->
+        Frontend: HTML, CSS, Bootstrap, JavaScript
+        Backend: Python
+        And MySQL Databases
 
-<!-- 
-<p class="content">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                                                                  
-                                                                       #NOT WORKING
-
-<a href="#" class="copy-text">copy Text</a> -->
-
-
-
-
-
-<!-- <script>
-    function copyToClipboard(element) {
-  var $temp = $("<input>");
-  $("body").append($temp);
-  $temp.val($(element).text()).select();
-  document.execCommand("copy");
-  $temp.remove();
-}
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<p id="p1">P1: I am paragraph 1</p>
-<p id="p2">P2: I am a second paragraph</p>
-<button onclick="copyToClipboard('#p1')">Copy P1</button>
-<button onclick="copyToClipboard('#p2')">Copy P2</button>
-<br/><br/><input type="text" placeholder="Paste here for test" /> -->
-
-
-
-
-
-
-
-
+        It's an Ecomm Blog Website Where Sellers can Post there AD and Buyers can Buy the product
+        with full Safety From CEZ Support
+        </article>
+        <div class="article-metadata">
+            hi its a normal post
+        </div>
+    hi its a normal post
 {% endblock content %}
