@@ -25,6 +25,7 @@ def about():
     return render_template('about.html', title='About')
 
 
+
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -83,7 +84,6 @@ def save_picture(form_picture):
     i.save(picture_path)
 
     return picture_fn
-
 
 @app.route("/account", methods=['GET', 'POST'])
 @login_required
