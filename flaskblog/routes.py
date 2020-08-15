@@ -20,9 +20,18 @@ def home():
 
 
 
-@app.route("/about")
+@app.route("/about",  methods=['GET', 'POST'])
 def about():
-    return render_template('about.html', title='About')
+    form = UpdateAccountForm()
+    if form.picture.data:
+        picture_file = postpics(form.picture.data)
+        current_user.image_file = picture_file
+    db.session.commit()
+    flash('Your account has been updated!', 'success')
+    # return render_template('about.html')
+    img_file = url_for('static', filename='postpics/' + current_user.image_file)
+    return render_template('about.html', title='About',
+                        img_file=img_file, form=form)
 
 
 
@@ -83,6 +92,18 @@ def save_picture(form_picture):
     i.thumbnail(output_size)
     i.save(picture_path)
 
+    return picture_fn
+
+def postpics(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/postpics', picture_fn)
+
+    output_size = (125, 125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
     return picture_fn
 
 @app.route("/account", methods=['GET', 'POST'])
