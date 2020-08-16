@@ -26,8 +26,8 @@ def about():
     if form.picture.data:
         picture_file = postpics(form.picture.data)
         current_user.image_file = picture_file
-    db.session.commit()
-    flash('Your account has been updated!', 'success')
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
     # return render_template('about.html')
     img_file = url_for('static', filename='postpics/' + current_user.image_file)
     return render_template('about.html', title='About',
