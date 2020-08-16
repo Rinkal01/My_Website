@@ -5,7 +5,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                             PostForm, RequestResetForm, ResetPasswordForm)
+                             PostForm, RequestResetForm, ResetPasswordForm, aboutForm)
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
@@ -22,7 +22,7 @@ def home():
 
 @app.route("/about",  methods=['GET', 'POST'])
 def about():
-    form = UpdateAccountForm()
+    form = aboutForm()
     if form.picture.data:
         picture_file = postpics(form.picture.data)
         current_user.image_file = picture_file
