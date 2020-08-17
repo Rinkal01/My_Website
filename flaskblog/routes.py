@@ -5,7 +5,7 @@ from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from flaskblog import app, db, bcrypt, mail
 from flaskblog.forms import (RegistrationForm, LoginForm, UpdateAccountForm,
-                             PostForm, RequestResetForm, ResetPasswordForm, aboutForm)
+                             PostForm, RequestResetForm, ResetPasswordForm)
 from flaskblog.models import User, Post
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
@@ -14,24 +14,25 @@ from flask_mail import Message
 @app.route("/")
 @app.route("/home")
 def home():
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template('home.html', posts=posts)
+    page = request.args.get('page', 1, type=int)                  
+    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5, posts=posts)
+    return render_template('home.html')
 
 
 
-@app.route("/about",  methods=['GET', 'POST'])
+@app.route("/about")
 def about():
-    form = aboutForm()
-    if form.picture.data:
-        picture_file = postpics(form.picture.data)
-        current_user.image_file = picture_file
-        db.session.commit()
-        flash('Your account has been updated!', 'success')
+    # form = aboutForm()
+    # if form.picture.data:
+    #     picture_file = postpics(form.picture.data)
+    #     current_user.image_file = picture_file
+    #     db.session.commit()
+    #     flash('Your account has been updated!', 'success')
     # return render_template('about.html')
-    img_file = url_for('static', filename='postpics/' + current_user.image_file)
-    return render_template('about.html', title='About',
-                        img_file=img_file, form=form)
+    # img_file = url_for('static', filename='postpics/' + current_user.image_file)
+    # return render_template('about.html', title='About',
+    #                     img_file=img_file, form=form)
+    return redirect('https://google.com')
 
 
 
@@ -126,19 +127,39 @@ def account():
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
 
-
+posts = [
+    {
+        'author': 'Corey Schafer',
+        'title': 'Blog Post 1',
+        'content': 'First post content',
+        'date_posted': 'April 20, 2018'
+    },
+    {
+        'author': 'Jane Doe',
+        'title': 'Blog Post 2',
+        'content': 'Second post content',
+        'date_posted': 'April 21, 2018'
+    }
+]
 @app.route("/post/new", methods=['GET', 'POST'])
 @login_required
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, author=current_user)
-        db.session.add(post)
-        db.session.commit()
-        flash('Your post has been created!', 'success')
+        # form2 = aboutForm()
+        if form.picture.data:
+            picture_file = postpics(form.picture.data)
+            post.img_file = picture_file
+            db.session.commit()
+            img_file = url_for('static', filename='postpics/' + post.img_file)
+            post = Post(title=form.title.data, content=form.content.data, author=current_user, img_file=img_file)
+            db.session.add(post)
+            db.session.commit()
+            flash('Your post has been created!', 'success')
         return redirect(url_for('home'))
-    return render_template('create_post.html', title='New Post',
-                           form=form, legend='New Post')
+    # '
+    return render_template('create_post.html', title='New Post', 
+                           form=form, legend='New Post', img_file=img_file)
 
 
 @app.route("/post/<int:post_id>")

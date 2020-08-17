@@ -37,17 +37,17 @@ class LoginForm(FlaskForm):
 
 class UpdateAccountForm(FlaskForm):
     username = StringField('Username',
-                           validators=[Length(min=2, max=20)])
+                           validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email',
-                        validators=[Email()])
-    picture = FileField('Profile Pic', validators=[FileAllowed(['jpg', 'png'])])
+                        validators=[DataRequired(), Email()])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField('Update')
 
     def validate_username(self, username):
         if username.data != current_user.username:
             user = User.query.filter_by(username=username.data).first()
             if user:
-                raise ValidationError('Sorry That username is taken. Please choose a different one.')
+                raise ValidationError('That username is taken. Please choose a different one.')
 
     def validate_email(self, email):
         if email.data != current_user.email:
@@ -56,9 +56,12 @@ class UpdateAccountForm(FlaskForm):
                 raise ValidationError('That email is taken. Please choose a different one.')
 
 
+
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     content = TextAreaField('Content', validators=[DataRequired()])
+    picture = FileField('Pic', validators=[FileAllowed(['jpg', 'png'])])
+    # submit = SubmitField('Update')
     submit = SubmitField('Post')
 
 
@@ -79,6 +82,6 @@ class ResetPasswordForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
 
-class aboutForm(FlaskForm):
-    picture = FileField('Pic', validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Update')
+# class aboutForm(FlaskForm):
+#     picture = FileField('Pic', validators=[FileAllowed(['jpg', 'png'])])
+#     submit = SubmitField('Update')
